@@ -1,6 +1,8 @@
 package Paratropper;
 import java.util.ArrayList;
 
+import acm.graphics.GLabel;
+
 public class Poblat {
 	ArrayList<ElementMobil> Elements = new ArrayList<ElementMobil>();
 	ArrayList<ElementMobil> Borrare = new ArrayList<ElementMobil>();
@@ -13,15 +15,18 @@ public class Poblat {
 		this.pantalla = pantalla;
 	}
 	
-	public Boolean batalla() {
+	public Boolean batalla(Cano cano, GLabel tirs) {
+		tirs = new GLabel(cano.getBales()+"",100,600);
+		pantalla.add(tirs);
 		CreaHeli();
 		MoureElements();
 		ComprovaSurt();
 		Saltadors();
-		Bales();
+		Bales(cano);
 		Invasors();
 		Proxims();
 		moriran();
+		pantalla.remove(tirs);
 		return ComprovaPartida();
 		
 	}
@@ -58,7 +63,7 @@ public class Poblat {
 				Soldat aquest = (Soldat) element;
 				if (aquest.getPersona().getImatge().getY() > 750) {		
 						Borrare.add(element);
-						Invasors.add(element);
+						Invasors.add(aquest.getPersona());
 						pantalla.remove(aquest.getParacaigudes().getImatge());
 				}
 			}
@@ -77,7 +82,7 @@ public class Poblat {
 		Borrare.clear();
 	}
 	
-	public void Bales() {
+	public void Bales(Cano cano) {
 		for (ElementMobil element: Elements) {
 			if (element instanceof bala) {
 				for (ElementMobil rival: Elements) {
@@ -89,6 +94,7 @@ public class Poblat {
 							pantalla.remove(aquest.getParacaigudes().getImatge());
 							Borrare.add(element);
 							Borrare.add(rival);
+							cano.setBales(5+cano.getBales());
 						} else if (element.getImatge().getBounds().intersects(aquest.getParacaigudes().getImatge().getBounds())) {
 							pantalla.remove(aquest.getParacaigudes().getImatge());
 							pantalla.remove(element.getImatge());
@@ -97,6 +103,7 @@ public class Poblat {
 							aquest.getParacaigudes().SetVida(false);
 							aquest.getPersona().SetVel(20);
 							moriran.add(aquest.getPersona());
+							cano.setBales(5+cano.getBales());
 						}
 					}
 				}
@@ -125,7 +132,7 @@ public class Poblat {
 	
 	public void ComprovaSurt() {
 		for (ElementMobil element : Elements) {
-			if (element.getImatge().getX() > 1200 || element.getImatge().getX() < -300 || element.getImatge().getY() > 800 || element.getImatge().getY() < 0) {
+			if (element.getImatge().getX() > 1200 || element.getImatge().getX() < 0 || element.getImatge().getY() > 800 || element.getImatge().getY() < 0) {
 				pantalla.remove(element.getImatge());
 				Borrare.add(element);
 			}
@@ -147,7 +154,7 @@ public class Poblat {
 			Heli nau = new Heli("hell2.png","hell3.png","hell2R.png","hell3R.png",5,(int)(Math.random()*2),(int)(Math.random()*1001));
 			
 			if (nau.getDireccio() == 0) {
-				nau.getImatge().setLocation(-220,100);
+				nau.getImatge().setLocation(0,100);
 			} else {
 				nau.getImatge().setLocation(pantalla.getWidth(),0);
 			}
@@ -156,5 +163,43 @@ public class Poblat {
 			Elements.add(nau);
 			Helis.add(nau);
 		}
+	}
+	
+	public void clearCanvas(Cano cano) {
+		for (Element a : Elements) {
+			if (a instanceof Soldat) {
+				Soldat aquest = (Soldat) a;
+				pantalla.remove(aquest.getPersona().getImatge());
+				pantalla.remove(aquest.getParacaigudes().getImatge());
+			}
+			pantalla.remove(a.getImatge());
+		}
+		Elements.clear();
+		
+		for (Element a : Borrare) {
+			pantalla.remove(a.getImatge());
+		}
+		Borrare.clear();
+		
+		for (Element a : Helis) {
+			pantalla.remove(a.getImatge());
+		}
+		Helis.clear();
+		for (Element a : Invasors) {
+			pantalla.remove(a.getImatge());
+		}
+		Invasors.clear();
+		
+		for (Element a : Proxims) {
+			pantalla.remove(a.getImatge());
+		}
+		Proxims.clear();
+		
+		for (Element a : moriran) {
+			pantalla.remove(a.getImatge());
+		}
+		moriran.clear();
+		pantalla.remove(cano.getImatge());
+		
 	}
 }

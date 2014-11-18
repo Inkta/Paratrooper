@@ -3,6 +3,14 @@ import java.util.ArrayList;
 
 public class Cano extends Element{
 	int bales;
+	public int getBales() {
+		return bales;
+	}
+
+	public void setBales(int bales) {
+		this.bales = bales;
+	}
+
 	public Cano(String imatge, int a) {
 		super(imatge);
 		this.bales = a;

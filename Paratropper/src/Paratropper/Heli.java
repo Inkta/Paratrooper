@@ -4,6 +4,7 @@ import acm.graphics.GImage;
 
 public class Heli extends ElementMobil{
 	Soldat saltador = new Soldat();
+	GImage imatge1;
 	GImage imatge2;
 	GImage imatgeR;
 	GImage imatge2R;
@@ -18,13 +19,14 @@ public class Heli extends ElementMobil{
 
 	public Heli(String imatge, String imatge2,String imatgeR, String imatge2R, int velL, int c, int d) {
 		super(imatge,velL);
+		this.imatge1 = new GImage(imatge);
 		this.imatge2 = new GImage(imatge2);
 		this.direccio = c;
 		this.lloc = d;
 		this.imatgeR = new GImage(imatgeR);
 		this.imatge2R = new GImage(imatge2R);
-		
 		this.imatge.setSize(220,75);
+		this.imatge1.setSize(220,75);
 		this.imatge2.setSize(220,75);
 		this.imatgeR.setSize(220,75);
 		this.imatge2R.setSize(220,75);
@@ -32,33 +34,34 @@ public class Heli extends ElementMobil{
 	}
 	
 	public GImage getImatge() {
-		if (this.direccio == 1) {
-			return this.imatge;
-		} else {
-			return this.imatgeR;
-		}
+		
+		return this.imatge;
 	}
 	
 	public void CanviaImatge(joc pantalla) {
 		this.canvi = !this.canvi;
 		if (this.direccio == 0) {
 			if (this.canvi) {
-				this.imatge2R.setLocation(this.imatgeR.getX(),this.imatgeR.getY());
-				pantalla.remove(this.imatgeR);
-				pantalla.add(this.imatge2R);
+				this.imatge2R.setLocation(this.imatge.getX(),this.imatge.getY());
+				pantalla.remove(this.imatge);
+				this.imatge = imatge2R;
+				pantalla.add(this.imatge);
 			} else {
-				this.imatgeR.setLocation(this.imatge2R.getX(),this.imatge2R.getY());
-				pantalla.remove(this.imatge2R);
-				pantalla.add(this.imatgeR);
+				this.imatgeR.setLocation(this.imatge.getX(),this.imatge.getY());
+				pantalla.remove(this.imatge);
+				this.imatge = this.imatgeR;
+				pantalla.add(this.imatge);
 			}
 		} else {
 			if (this.canvi) {
 				this.imatge2.setLocation(this.imatge.getX(),this.imatge.getY());
 				pantalla.remove(this.imatge);
-				pantalla.add(this.imatge2);
+				this.imatge = this.imatge2;
+				pantalla.add(this.imatge);
 			} else {
-				this.imatge.setLocation(this.imatge2.getX(),this.imatge2.getY());
-				pantalla.remove(this.imatge2);
+				this.imatge1.setLocation(this.imatge.getX(),this.imatge.getY());
+				pantalla.remove(this.imatge);
+				this.imatge = this.imatge1;
 				pantalla.add(this.imatge);
 			}
 		}
