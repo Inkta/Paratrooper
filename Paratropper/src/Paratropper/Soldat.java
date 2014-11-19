@@ -1,8 +1,8 @@
 package Paratropper;
 
 public class Soldat extends ElementMobil{
-	persona persona = new persona("Pedobear.png", 2);
-	Para paracaigudes = new Para("paracaigudes.png", 2);
+	persona persona = new persona("Pedobear-1.png", 2);
+	Para paracaigudes = new Para("paracaigudes-1.png", 2);
 	
 	public Soldat() {
 		super("",0);

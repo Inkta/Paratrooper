@@ -12,10 +12,10 @@ public class joc extends GraphicsProgram {
 	public double angle = 0;
 	Poblat lloc;
 	GLabel tirs;
-	boolean pint = false;
 	boolean pulsat = false;
 	GImage start = new GImage("Start.png");
 	GImage fi = new GImage("Final.png");
+	GImage background = new GImage("background.jpg");
 	
 	public final void run() {
 		setSize(1200,800);
@@ -26,12 +26,14 @@ public class joc extends GraphicsProgram {
 			start.setSize(MidaPantalla[0],MidaPantalla[1]);
 			add(start);
 			while (!pulsat) {System.out.print("");}
-			System.out.println("Hola");
 			remove(start);
+			background.setSize(MidaPantalla[0],MidaPantalla[1]);
+			add(background);
 			lloc = new Poblat(this);
 			cano = PosicionaCano(MidaPantalla);
 			while(lloc.batalla(cano,tirs)) {}
 			pause(100);
+			remove(background);
 			lloc.clearCanvas(cano);
 			pause(50);
 			pulsat = false;
@@ -39,12 +41,11 @@ public class joc extends GraphicsProgram {
 			add(fi);
 			while(!pulsat) {System.out.print("");}
 			remove(fi);
-			
 		}
 	}
 	
 	private Cano PosicionaCano(double[] MidaPantalla) {
-		Cano cano = new Cano("base.png",50);
+		Cano cano = new Cano("base-1.png",50);
 		cano.getImatge().setSize(100,65);
 		pause(100);
 		cano.getImatge().setLocation(MidaPantalla[0]/2-cano.getImatge().getWidth()/2, MidaPantalla[1]-cano.getImatge().getHeight());
@@ -73,7 +74,6 @@ public class joc extends GraphicsProgram {
 		case KeyEvent.VK_S:
 			if (cano.getBales() >= 0) {
 				lloc.AfegirBala(cano.Dispara(Math.sin(this.angle),Math.cos(this.angle)));
-				pint = true;
 			}
 			break;
 		default:

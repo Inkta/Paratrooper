@@ -1,4 +1,6 @@
 package Paratropper;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 
 import acm.graphics.GLabel;
@@ -16,7 +18,9 @@ public class Poblat {
 	}
 	
 	public Boolean batalla(Cano cano, GLabel tirs) {
-		tirs = new GLabel(cano.getBales()+"",100,600);
+		tirs = new GLabel(cano.getBales()+"",100,700);
+		tirs.setColor(Color.white);
+		tirs.setFont(new Font("Serif", Font.BOLD, 21));
 		pantalla.add(tirs);
 		CreaHeli();
 		MoureElements();
@@ -151,7 +155,7 @@ public class Poblat {
 	
 	public void CreaHeli() {
 		if (Math.random() > 0.99) {
-			Heli nau = new Heli("hell2.png","hell3.png","hell2R.png","hell3R.png",5,(int)(Math.random()*2),(int)(Math.random()*1001));
+			Heli nau = new Heli("hell2-1.png","hell3-1.png","hell2R-1.png","hell3R-1.png",5,(int)(Math.random()*2),(int)(Math.random()*1001));
 			
 			if (nau.getDireccio() == 0) {
 				nau.getImatge().setLocation(0,100);
