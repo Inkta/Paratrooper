@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import acm.graphics.GLabel;
 
 public class Poblat {
+	double dificultat = 0;
+	int Assessinats = 0;
+	GLabel morts;
 	ArrayList<ElementMobil> Elements = new ArrayList<ElementMobil>();
 	ArrayList<ElementMobil> Borrare = new ArrayList<ElementMobil>();
 	ArrayList<Heli> Helis = new ArrayList<Heli>();
@@ -18,9 +21,13 @@ public class Poblat {
 	}
 	
 	public Boolean batalla(Cano cano, GLabel tirs) {
+		this.morts = new GLabel(this.Assessinats+"",1000,100);
+		this.morts.setColor(Color.white);
+		this.morts.setFont(new Font("Serif", Font.BOLD, 21));
 		tirs = new GLabel(cano.getBales()+"",100,700);
 		tirs.setColor(Color.white);
 		tirs.setFont(new Font("Serif", Font.BOLD, 21));
+		pantalla.add(this.morts);
 		pantalla.add(tirs);
 		CreaHeli();
 		MoureElements();
@@ -31,6 +38,7 @@ public class Poblat {
 		Proxims();
 		moriran();
 		pantalla.remove(tirs);
+		pantalla.remove(this.morts);
 		return ComprovaPartida();
 		
 	}
@@ -93,6 +101,8 @@ public class Poblat {
 					if (rival instanceof Soldat) {
 						Soldat aquest = (Soldat) rival;
 						if (element.getImatge().getBounds().intersects(aquest.getPersona().getImatge().getBounds())) {
+							this.dificultat+=0.001;
+							this.Assessinats+=1;
 							pantalla.remove(element.getImatge());
 							pantalla.remove(aquest.getPersona().getImatge());
 							pantalla.remove(aquest.getParacaigudes().getImatge());
@@ -100,6 +110,8 @@ public class Poblat {
 							Borrare.add(rival);
 							cano.setBales(5+cano.getBales());
 						} else if (element.getImatge().getBounds().intersects(aquest.getParacaigudes().getImatge().getBounds())) {
+							this.Assessinats+=1;
+							this.dificultat+=0.001;
 							pantalla.remove(aquest.getParacaigudes().getImatge());
 							pantalla.remove(element.getImatge());
 							Borrare.add(element);
@@ -154,7 +166,7 @@ public class Poblat {
 	}
 	
 	public void CreaHeli() {
-		if (Math.random() > 0.99) {
+		if (Math.random() > 0.99-dificultat) {
 			Heli nau = new Heli("hell2-1.png","hell3-1.png","hell2R-1.png","hell3R-1.png",5,(int)(Math.random()*2),(int)(Math.random()*1001));
 			
 			if (nau.getDireccio() == 0) {
