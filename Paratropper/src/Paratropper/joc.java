@@ -66,12 +66,17 @@ public class joc extends GraphicsProgram {
 		case KeyEvent.VK_UP:
 			break;
 		case KeyEvent.VK_LEFT:
-			this.angle = this.angle - 0.25;
+			if (this.angle > -1.5) {
+				this.angle = this.angle - 0.25;
+			}
 			break;
 		case KeyEvent.VK_RIGHT:
-			this.angle = this.angle + 0.25;
+			if (this.angle < 1.5) {
+				this.angle = this.angle + 0.25;
+			}
 			break;
 		case KeyEvent.VK_S:
+			System.out.println(this.angle + " " + Math.cos(this.angle));
 			if (cano.getBales() >= 0) {
 				lloc.AfegirBala(cano.Dispara(Math.sin(this.angle),Math.cos(this.angle)));
 			}
